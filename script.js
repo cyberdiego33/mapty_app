@@ -1,0 +1,14 @@
+const toggleDiv = document.querySelector("#toggleDiv");
+const viewLogs = document.querySelector("#viewLogs");
+
+toggleDiv.addEventListener("click", (e) => {
+  if (viewLogs.classList.contains("w-fit")) {
+    viewLogs.classList.remove("p-4");
+    viewLogs.classList.add("w-0");
+    viewLogs.classList.remove("w-fit");
+  } else {
+    viewLogs.classList.add("p-4");
+    viewLogs.classList.remove("w-0");
+    viewLogs.classList.add("w-fit");
+  }
+});

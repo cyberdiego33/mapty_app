@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="output.css" />
     <script src="script.js" defer></script>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body class="min-h-screen">
+    <main>
+      <nav class="bg-gray-800 px-6 py-3 flex justify-between">
+        <div class="w-20 h-6">
+          <img
+            class="size-full object-cover"
+            src="images/logo.png"
+            alt="mapty logo"
+          />
+        </div>
+        <div id="toggleDiv" class="size-4 bg-white sm:hidden"></div>
+      </nav>
+
+      <section class="p-4 min-h-screen flex">
+        <div id="viewLogs" class="flex-1 w-0 h-full overflow-x-hidden bg-[#2d3439] absolute md:relative max-w-[400px]">
+          <div class="flex space-x-4">
+            <img class="w-20 h-6 object-cover" src="images/logo.png" alt="" />
+            <span class="text-gray-200">Your workout logs</span>
+          </div>
+        </div>
+        <div id="map" class="bg-[#aaa] flex-1"></div>
+      </section>
+    </main>
+  </body>
 </html>
