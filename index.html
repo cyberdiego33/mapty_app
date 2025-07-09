@@ -17,16 +17,68 @@
             alt="mapty logo"
           />
         </div>
-        <div id="toggleDiv" class="size-6 bg-white sm:hidden rounded-full"><img class="size-full object-center rounded-full" src="images/stack.png" alt=""></div>
+        <div id="toggleDiv" class="size-6 bg-white sm:hidden rounded-full">
+          <img
+            class="size-full object-center rounded-full"
+            src="images/stack.png"
+            alt=""
+          />
+        </div>
       </nav>
 
-      <section class="p-4 min-h-screen flex">
-        <div id="viewLogs" class="flex-1 w-0 h-full overflow-x-hidden bg-[#2d3439] absolute md:relative max-w-[400px]">
-          <div class="flex space-x-4">
+      <section class="p-4 min-h-screen flex relative">
+        <div
+          id="viewLogs"
+          class="flex-1 w-0 overflow-x-hidden bg-[#2d3439] absolute transition-all duration-700 md:relative max-w-[400px] md:w-fit md:p-4"
+        >
+          <div class="flex space-x-4 mb-4">
             <img class="w-20 h-6 object-cover" src="images/logo.png" alt="" />
             <span class="text-gray-200">Your workout logs</span>
           </div>
+
+          <div class="workouts">
+            <form id="form" class="py-3 px-4 bg-[#42484d]">
+
+              <div class="flex space-x-4 mb-3">
+
+                <div class="flex flex-1 space-x-2 items-center">
+                  <label class="text-gray-300 font-semibold">Type</label>
+                  <select  class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]">
+                    <option value="running">Running</option>
+                    <option value="cycling">Cycling</option>
+                  </select>
+                </div>
+
+                <div class="flex flex-1 space-x-2 items-center">
+                  <label class="text-gray-300 font-semibold">Distance</label>
+                  <input class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]" placeholder="km" />
+                </div>
+
+              </div>
+
+              <div class="flex">
+
+                <div class="flex flex-1 space-x-2 items-center mr-4">
+                  <label class="text-gray-300 font-semibold">Duration</label>
+                  <input  class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]" placeholder="min" />
+                </div>
+
+                <div class="flex flex-1 space-x-2 items-center">
+                  <label class="text-gray-300 font-semibold">Cadence</label>
+                  <input  class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]" placeholder="step/min" />
+                </div>
+
+                <div class="hidden flex-1 space-x-2 items-center">
+                  <label class="text-gray-300 font-semibold">Cadence</label>
+                  <input  class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]" placeholder="step/min" />
+                </div>
+
+              </div>
+              <button id="form-btn" class="w-[40px] rounded-sm mt-2 bg-[#ececec] font-semibold">OK</button>
+            </form>
+          </div>
         </div>
+
         <div id="map" class="bg-[#aaa] flex-1"></div>
       </section>
     </main>
