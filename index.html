@@ -6,6 +6,18 @@
     <title>Document</title>
     <link rel="stylesheet" href="output.css" />
     <link rel="stylesheet" href="" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="script.js" defer></script>
   </head>
   <body class="min-h-screen">
@@ -28,9 +40,10 @@
       </nav>
 
       <section class="p-4 min-h-screen flex relative">
+
         <div
           id="viewLogs"
-          class="flex-1 w-0 overflow-x-hidden bg-[#2d3439] absolute transition-all duration-700 md:relative max-w-[400px] md:w-fit md:p-4"
+          class="flex-1 w-0 overflow-x-hidden bg-[#2d3439] absolute transition-all duration-700 md:relative max-w-[400px] md:w-fit md:p-4 z-100"
         >
           <div class="flex space-x-4 mb-4">
             <img class="w-20 h-6 object-cover" src="images/logo.png" alt="" />
@@ -116,7 +129,7 @@
           </div>
         </div>
 
-        <div id="map" class="bg-[#aaa] flex-1"></div>
+        <div id="map" class="bg-[#aaa] flex-1 relative"></div>
       </section>
     </main>
   </body>

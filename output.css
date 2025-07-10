@@ -178,6 +178,9 @@
   .relative {
     position: relative;
   }
+  .z-100 {
+    z-index: 100;
+  }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
@@ -201,9 +204,6 @@
   }
   .hidden {
     display: none;
-  }
-  .table {
-    display: table;
   }
   .size-6 {
     width: calc(var(--spacing) * 6);
@@ -240,24 +240,11 @@
   .flex-1 {
     flex: 1;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .resize {
-    resize: both;
-  }
   .items-center {
     align-items: center;
   }
   .justify-between {
     justify-content: space-between;
-  }
-  .space-x-1 {
-    :where(& > :not(:last-child)) {
-      --tw-space-x-reverse: 0;
-      margin-inline-start: calc(calc(var(--spacing) * 1) * var(--tw-space-x-reverse));
-      margin-inline-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-x-reverse)));
-    }
   }
   .space-x-2 {
     :where(& > :not(:last-child)) {
@@ -276,22 +263,11 @@
   .overflow-x-hidden {
     overflow-x: hidden;
   }
-  .rounded {
-    border-radius: 0.25rem;
-  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
   .rounded-sm {
     border-radius: var(--radius-sm);
-  }
-  .border {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-  }
-  .border-l {
-    border-left-style: var(--tw-border-style);
-    border-left-width: 1px;
   }
   .border-l-3 {
     border-left-style: var(--tw-border-style);
@@ -300,26 +276,17 @@
   .border-green-400 {
     border-color: var(--color-green-400);
   }
-  .border-r-green-400 {
-    border-right-color: var(--color-green-400);
-  }
   .bg-\[\#2d3439\] {
     background-color: #2d3439;
   }
   .bg-\[\#42484d\] {
     background-color: #42484d;
   }
-  .bg-\[\#\] {
-    background-color: #;
-  }
   .bg-\[\#aaa\] {
     background-color: #aaa;
   }
   .bg-\[\#ececec\] {
     background-color: #ececec;
-  }
-  .bg-\[\@\] {
-    background-color: @;
   }
   .bg-gray-800 {
     background-color: var(--color-gray-800);
@@ -379,13 +346,6 @@
   .uppercase {
     text-transform: uppercase;
   }
-  .underline {
-    text-decoration-line: underline;
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
-  }
   .transition-all {
     transition-property: all;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -440,11 +400,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @property --tw-duration {
   syntax: "*";
   inherits: false;
@@ -455,7 +410,6 @@
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
       --tw-font-weight: initial;
-      --tw-outline-style: solid;
       --tw-duration: initial;
     }
   }
