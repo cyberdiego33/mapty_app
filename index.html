@@ -50,13 +50,13 @@
             <span class="text-gray-200">Your workout logs</span>
           </div>
 
-          <div>
-            <div class="workouts-form mb-6 bg-[#42484d] py-3 px-4 rounded-sm">
+          <div>  
+            <div id="formDiv" class="workouts-form mb-6 bg-[#42484d] py-3 px-4 rounded-sm hidden">
               <form id="form" class="">
                 <div class="flex space-x-4 mb-3">
                   <div class="flex flex-1 space-x-2 items-center">
                     <label class="text-gray-300 font-semibold">Type</label>
-                    <select
+                    <select id="inputType"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                     >
                       <option value="running">Running</option>
@@ -66,7 +66,7 @@
 
                   <div class="flex flex-1 space-x-2 items-center">
                     <label class="text-gray-300 font-semibold">Distance</label>
-                    <input
+                    <input id="inputDistance"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                       placeholder="km"
                     />
@@ -76,25 +76,25 @@
                 <div class="flex">
                   <div class="flex flex-1 space-x-2 items-center mr-4">
                     <label class="text-gray-300 font-semibold">Duration</label>
-                    <input
+                    <input id="inputDuration"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                       placeholder="min"
                     />
                   </div>
 
-                  <div class="flex flex-1 space-x-2 items-center">
+                  <div id="cadence" class="flex flex-1 space-x-2 items-center">
                     <label class="text-gray-300 font-semibold">Cadence</label>
-                    <input
+                    <input id="inputCadence"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                       placeholder="step/min"
                     />
                   </div>
 
-                  <div class="hidden flex-1 space-x-2 items-center">
-                    <label class="text-gray-300 font-semibold">Cadence</label>
-                    <input
+                  <div id="elevation" class="hidden flex-1 space-x-2 items-center">
+                    <label class="text-gray-300 font-semibold">Elev Gain</label>
+                    <input id="elevation"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
-                      placeholder="step/min"
+                      placeholder="meters"
                     />
                   </div>
                 </div>

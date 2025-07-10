@@ -1,5 +1,21 @@
+"use strict";
+
 const toggleDiv = document.querySelector("#toggleDiv");
 const viewLogs = document.querySelector("#viewLogs");
+const formDiv = document.querySelector("#formDiv");
+const form = document.querySelector("form");
+///////////////////////////////////////////////////////
+// Inputs
+
+const inputType = document.querySelector("#inputType");
+const inputDistance = document.querySelector("#inputDistance");
+const inputDuration = document.querySelector("#inputDuration");
+const inputCadence = document.querySelector("#inputCadence");
+const inputElevation = document.querySelector("#elevation");
+
+/////////////////////////////////////////////////////
+// Global Map Variables
+let map, mapEvent;
 
 // Side bar Toggle
 toggleDiv.addEventListener("click", (e) => {
@@ -21,11 +37,11 @@ const GotLocation = (position) => {
   const { latitude, longitude } = position.coords;
   console.log(latitude, longitude);
 
-  const coords = [5.4885544, 7.0606007]
+  const coords = [5.4885544, 7.0606007];
 
   console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
-  const map = L.map("map").setView(coords, 13);
+  map = L.map("map").setView(coords, 13);
 
   console.log(map);
 
@@ -34,24 +50,54 @@ const GotLocation = (position) => {
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
-  L.marker(coords)
-    .addTo(map)
-    .bindPopup("A pretty CSS popup.<br> Easily customizable.")
-    .openPopup();
-  
-  map.on("click", function(mapEvent) {
-    console.log(mapEvent);
-
-    const {lat, lng} = mapEvent.latlng
-
-    L.marker([lat, lng])
-    .addTo(map)
-    .bindPopup("Workout.")
-    .openPopup();
-
-  })
+  // This shows the form
+  map.on("click", function (mapE) {
+    mapEvent = mapE;
+    formDiv.classList.remove("hidden");
+    inputDistance.focus();
+  });
 };
 
 navigator.geolocation.getCurrentPosition(GotLocation, ErrorFun);
 
+///////////////////////////////////////////////
+// Now this now shows the marker
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  //Clear Input fields
+  inputCadence.value =
+    inputDistance.value =
+    inputDuration.value =
+    inputElevation.value =
+      "";
+
+  console.log(mapEvent);
+
+  const { lat, lng } = mapEvent.latlng;
+
+  L.marker([lat, lng])
+    .addTo(map)
+    .bindPopup(
+      L.popup({
+        maxWidth: 200,
+        minWidth: 100,
+        maxHeight: 40,
+        autoClose: false,
+        closeOnClick: false,
+        className: "running-popup",
+      })
+    )
+    .setPopupContent("workout")
+    .openPopup();
+});
+
+///////////////////////////////////////////
+// Event listener for which form to display
+inputType.addEventListener("change", function () {
+  inputCadence.closest("#cadence").classList.toggle("flex");
+  inputCadence.closest("#cadence").classList.toggle("hidden");
+  inputElevation.closest("#elevation").classList.toggle("flex");
+  inputElevation.closest("#elevation").classList.toggle("hidden");
+});
 // console.log(GetPosition);
