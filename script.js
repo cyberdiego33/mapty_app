@@ -29,10 +29,23 @@ const ErrorFun = () => {
   alert("Could not get your position");
 };
 
+///////////////////////////////////////////////
+
+class Workout {
+  date = new Date();
+  id = (new Date() + "").slice(-10)
+
+  constructor(coords, distance, duration) {
+    this.coords = coords;
+    this.distance = distance;
+    this.duration = duration;
+  }
+}
+
 ///////////////////////////////////////////
 // Creating Class for Workout Class
 
-class WorkOutApp {
+class OpenApp {
   #map;
   #mapEvent;
 
@@ -68,6 +81,21 @@ class WorkOutApp {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
+
+    L.marker(coords)
+      .addTo(this.#map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 200,
+          minWidth: 100,
+          maxHeight: 40,
+          autoClose: false,
+          closeOnClick: false,
+          className: "running-popup",
+        })
+      )
+      .setPopupContent("Current Location")
+      .openPopup();
 
     // This shows the form
     this.#map.on("click", this.#showForm.bind(this));
@@ -126,4 +154,4 @@ class WorkOutApp {
 ////////////////////////////////////////////////////
 // Creating an instance app
 
-const App = new WorkOutApp();
+const App = new OpenApp();

@@ -35,6 +35,10 @@ input:focus {
 
 
 /* PopUp Stylings */
+.leaflet-container {
+    z-index: 1;
+}
+
 .leaflet-popup .leaflet-popup-content-wrapper {
   background-color: var(--color-dark--1);
   color: var(--color-light--2);
