@@ -30,20 +30,52 @@ const ErrorFun = () => {
 };
 
 ///////////////////////////////////////////////
+// Creating Class for the Workout data
 
 class Workout {
-  date = new Date();
-  id = (new Date() + "").slice(-10);
+  date = new Date().toDateString();
+  id = (Date.now() + "").slice(-5);
 
   constructor(coords, distance, duration) {
-    this.coords = coords;
+    this.coords = coords; // An array of [lat, lng]
     this.distance = distance;
     this.duration = duration;
+
+    console.log( this.id);
+    console.log(`Where is my ID`);
   }
 }
 
+class Running extends Workout {
+  constructor(coords, distance, duration, cadence) {
+    super(coords, distance, duration)
+    this.cadence = cadence
+    this.calcPace()
+  }
+  
+  calcPace() {
+    this.pace = this.duration / this.distance
+    return this.pace
+  }
+}
+
+class Cyclying extends Workout {
+  constructor(coords, distance, duration, elevationGain) {
+    super(coords, distance, duration)
+    this.elevationGain = elevationGain
+  }
+
+  calcSpeed() {
+    this.speed = this.distance / (this.duration / 60)
+    return this.speed
+  }
+}
+
+// const testRunning = new Running([4.8472226, 6.974604], 49, 38, 68)
+// const CyclyingTest = new Cyclying([4.8472226, 6.974604], 38, 82, 39)
+
 ///////////////////////////////////////////
-// Creating Class for Workout Class
+// Creating Class for Map Functionality
 
 class OpenApp {
   #map;
