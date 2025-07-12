@@ -33,7 +33,7 @@ const ErrorFun = () => {
 
 class Workout {
   date = new Date();
-  id = (new Date() + "").slice(-10)
+  id = (new Date() + "").slice(-10);
 
   constructor(coords, distance, duration) {
     this.coords = coords;
@@ -106,6 +106,11 @@ class OpenApp {
   }
   #showForm(mapE) {
     this.#mapEvent = mapE;
+
+    if (viewLogs.classList.contains("w-0")) {
+      viewLogs.classList.add("p-4", "w-fit");
+      viewLogs.classList.remove("w-0");
+    }
     formDiv.classList.remove("hidden");
     inputDistance.focus();
   }
@@ -148,6 +153,11 @@ class OpenApp {
     inputDistance.blur();
     inputDuration.blur();
     inputElevation.blur();
+
+    if (viewLogs.classList.contains("w-fit")) {
+      viewLogs.classList.remove("p-4", "w-fit");
+      viewLogs.classList.add("w-0");
+    }
   }
 }
 
