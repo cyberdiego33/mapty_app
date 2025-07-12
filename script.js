@@ -4,6 +4,7 @@ const toggleDiv = document.querySelector("#toggleDiv");
 const viewLogs = document.querySelector("#viewLogs");
 const formDiv = document.querySelector("#formDiv");
 const form = document.querySelector("form");
+const LogsContainaer = document.querySelector("#LogsContainaer");
 ///////////////////////////////////////////////////////
 // Inputs
 
@@ -33,7 +34,8 @@ const ErrorFun = () => {
 // Creating Class for the Workout data
 
 class Workout {
-  date = new Date().toDateString();
+  month = new Date().getMonth();
+  date = new Date().getDate();
   id = (Date.now() + "").slice(-5);
 
   constructor(coords, distance, duration) {
@@ -44,14 +46,24 @@ class Workout {
     // console.log(this.id);
     // console.log(`Where is my ID`);
   }
+
+  _setDescription(type) {
+    // prettier-ignore
+    const ArrayOfMonth = ["Jan", "Feb", 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    this.description = `${
+      this.type === "running" ? "🏃‍♂️" : "🚴‍♂️"
+    } ${type} on ${ArrayOfMonth[this.month]} ${this.date}`;
+  }
 }
 
 class Running extends Workout {
-  type = "running"
+  type = "running";
   constructor(coords, distance, duration, cadence) {
     super(coords, distance, duration);
     this.cadence = cadence;
     this.calcPace();
+    this._setDescription("Running");
   }
 
   calcPace() {
@@ -61,10 +73,12 @@ class Running extends Workout {
 }
 
 class Cyclying extends Workout {
-  type = "cycling"
+  type = "cycling";
   constructor(coords, distance, duration, elevationGain) {
     super(coords, distance, duration);
     this.elevationGain = elevationGain;
+    this.calcSpeed();
+    this._setDescription("Cycling");
   }
 
   calcSpeed() {
@@ -85,6 +99,7 @@ class OpenApp {
     this.#getPosition();
     form.addEventListener("submit", this.#newWorkout.bind(this));
     inputType.addEventListener("change", this.#toggleElevationField);
+    LogsContainaer.addEventListener("click", this.#MoveToPopup.bind(this))
   }
 
   #getPosition() {
@@ -97,7 +112,6 @@ class OpenApp {
   }
 
   #renderMarker(workout) {
-
     console.log(workout);
 
     L.marker(workout.coords)
@@ -112,18 +126,88 @@ class OpenApp {
           className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent(`${workout.distance}`)
+      .setPopupContent(`${workout.description}`)
       .openPopup();
   }
 
+  #AddWorkOuts(workout) {
+    let string = `<div id="log-${workout.id}"
+                      class="workoutDiv p-5 bg-[#42484d] border-l-3 ${
+                        workout.type === "running"
+                          ? "border-green-400"
+                          : "border-yellow-400"
+                      } rounded-sm mb-4" data-id="${workout.id}">
+                      <h4 class="text-lg font-bold text-white">${
+                        workout.description
+                      }</h4>
+                      <div class="flex text-sm space-x-2">
+                        <div class="uppercase text-gray-300">
+                          ${
+                            workout.type === "running" ? "🏃‍♂️" : "🚴‍♂️"
+                          } <span class="text-white font-semibold">${
+      workout.distance
+    }</span>
+                          <span class="text-[10px]">km</span>
+                        </div>
+                        <div class="uppercase text-gray-300">
+                          ⏱ <span class="text-white font-semibold">${
+                            workout.duration
+                          }</span> <span class="text-[10px]">MIN</span>
+                        </div>
+                    `;
+    /////////////////////////////////////////////////////
+    // Appending the remaining html for Running
+    if (workout.type === "running") {
+      string += ` 
+                        <div class="uppercase text-gray-300">
+                          ⚡ <span class="text-white font-semibold">${workout.pace.toFixed(
+                            1
+                          )}</span>
+                          <span class="text-[10px]">min/km</span>
+                        </div>
+                        <div class="uppercase text-gray-300">
+                          🦶 <span class="text-white font-semibold">${
+                            workout.cadence
+                          }</span>
+                          <span class="text-[10px]">spm</span>
+                        </div>
+                      </div>
+                    </div>
+      `;
+    }
+
+    // Appending the remaining html for Cycling
+    if (workout.type === "cycling") {
+      string += ` 
+                        <div class="uppercase text-gray-300">
+                          ⚡ <span class="text-white font-semibold">${workout.speed.toFixed(
+                            1
+                          )}</span>
+                          <span class="text-[10px]">km/h</span>
+                        </div>
+                        <div class="uppercase text-gray-300">
+                          🌄 <span class="text-white font-semibold">${
+                            workout.elevationGain
+                          }</span>
+                          <span class="text-[10px]">m</span>
+                        </div>
+                      </div>
+                    </div>
+      `;
+    }
+
+    LogsContainaer.insertAdjacentHTML("afterbegin", string);
+  }
+
   #loadMap(position) {
-    const { latitude, longitude } = position.coords
+    const { latitude, longitude } = position.coords;
 
     const options = {
       coords: [latitude, longitude],
-      distance: 1010,
-      type: "running"
-    }
+      description: "Current Location",
+      type: "running",
+      id: "404"
+    };
 
     // const coords = [5.4885544, 7.0606007];
 
@@ -139,7 +223,25 @@ class OpenApp {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
 
-    this.#renderMarker(options)
+    this.#renderMarker(options);
+
+    const dateOptions = {
+      weekday: "long",
+      day: "2-digit",
+      month: "short"
+    }
+    const Presentdate = new Intl.DateTimeFormat(navigator.language, dateOptions).format(new Date())
+
+    const HtmlString = `
+                        <div id="log" data-id="404"
+              class="workoutDiv p-5 bg-[#42484d] border-l-3 border-green-400 rounded-sm mb-4"
+            >
+              <h4 class="text-lg font-bold text-white">Current Location on </h4>
+              <p class="text-white">${Presentdate}</p>
+            </div>
+    `
+    LogsContainaer.insertAdjacentHTML("beforeend", HtmlString)
+    this.#WorkoutList.push(options)
 
     // This shows the form
     inputType.value = "running";
@@ -149,6 +251,7 @@ class OpenApp {
   #ErrorFun() {
     alert("Could not get your position");
   }
+
   #showForm(mapE) {
     this.#mapEvent = mapE;
 
@@ -158,6 +261,26 @@ class OpenApp {
     }
     formDiv.classList.remove("hidden");
     inputDistance.focus();
+  }
+
+  #hideForm() {
+    //Clear Input fields
+    inputCadence.value =
+      inputDistance.value =
+      inputDuration.value =
+      inputElevation.value =
+        "";
+
+    inputCadence.blur();
+    inputDistance.blur();
+    inputDuration.blur();
+    inputElevation.blur();
+
+    if (viewLogs.classList.contains("w-fit")) {
+      viewLogs.classList.remove("p-4", "w-fit");
+      viewLogs.classList.add("w-0");
+    }
+    formDiv.classList.add("hidden");
   }
 
   #toggleElevationField() {
@@ -227,24 +350,27 @@ class OpenApp {
     this.#renderMarker(newWorkout);
 
     // Render workout on List
+    this.#AddWorkOuts(newWorkout);
 
-    //Clear Input fields
-    inputCadence.value =
-      inputDistance.value =
-      inputDuration.value =
-      inputElevation.value =
-        "";
-
-    inputCadence.blur();
-    inputDistance.blur();
-    inputDuration.blur();
-    inputElevation.blur();
-
-    if (viewLogs.classList.contains("w-fit")) {
-      viewLogs.classList.remove("p-4", "w-fit");
-      viewLogs.classList.add("w-0");
-    }
+    this.#hideForm();
   }
+
+  #MoveToPopup(e) {
+    const clickedEl = e.target.closest(".workoutDiv")
+    if (!clickedEl) return 
+    // console.log(clickedEl);
+
+    const workoutElement = this.#WorkoutList.find(el => el.id === clickedEl.dataset.id) 
+    // console.log(workoutElement);
+
+    this.#map.setView(workoutElement.coords, 13, {
+      animate: true,
+      pan: {
+        duration: 1,
+      }
+    })
+  }
+
 }
 
 ////////////////////////////////////////////////////
