@@ -51,9 +51,9 @@ class Workout {
     // prettier-ignore
     const ArrayOfMonth = ["Jan", "Feb", 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    this.description = `${
-      this.type === "running" ? "🏃‍♂️" : "🚴‍♂️"
-    } ${type} on ${ArrayOfMonth[this.month]} ${this.date}`;
+    this.description = `${this.type === "running" ? "🏃‍♂️" : "🚴‍♂️"} ${type} on ${
+      ArrayOfMonth[this.month]
+    } ${this.date}`;
   }
 }
 
@@ -96,10 +96,16 @@ class OpenApp {
   #WorkoutList = [];
 
   constructor() {
+    // Get Users Position
     this.#getPosition();
+
+    // Add EventListeners
     form.addEventListener("submit", this.#newWorkout.bind(this));
     inputType.addEventListener("change", this.#toggleElevationField);
-    LogsContainaer.addEventListener("click", this.#MoveToPopup.bind(this))
+    LogsContainaer.addEventListener("click", this.#MoveToPopup.bind(this));
+
+    // Get LocalStorage
+    this.#GetLocalStorage();
   }
 
   #getPosition() {
@@ -206,7 +212,7 @@ class OpenApp {
       coords: [latitude, longitude],
       description: "Current Location",
       type: "running",
-      id: "404"
+      id: "404",
     };
 
     // const coords = [5.4885544, 7.0606007];
@@ -228,9 +234,12 @@ class OpenApp {
     const dateOptions = {
       weekday: "long",
       day: "2-digit",
-      month: "short"
-    }
-    const Presentdate = new Intl.DateTimeFormat(navigator.language, dateOptions).format(new Date())
+      month: "short",
+    };
+    const Presentdate = new Intl.DateTimeFormat(
+      navigator.language,
+      dateOptions
+    ).format(new Date());
 
     const HtmlString = `
                         <div id="log" data-id="404"
@@ -239,13 +248,18 @@ class OpenApp {
               <h4 class="text-lg font-bold text-white">Current Location on </h4>
               <p class="text-white">${Presentdate}</p>
             </div>
-    `
-    LogsContainaer.insertAdjacentHTML("beforeend", HtmlString)
-    this.#WorkoutList.push(options)
+    `;
+    LogsContainaer.insertAdjacentHTML("beforeend", HtmlString);
+    // this.#WorkoutList.push(options);
 
     // This shows the form
     inputType.value = "running";
     this.#map.on("click", this.#showForm.bind(this));
+
+    // Setting the makers for the workouts in local storage
+    this.#WorkoutList.forEach((work) => {
+      this.#renderMarker(work);
+    });
   }
 
   #ErrorFun() {
@@ -353,24 +367,48 @@ class OpenApp {
     this.#AddWorkOuts(newWorkout);
 
     this.#hideForm();
+
+    this.#SetLocalStorage();
   }
 
   #MoveToPopup(e) {
-    const clickedEl = e.target.closest(".workoutDiv")
-    if (!clickedEl) return 
+    const clickedEl = e.target.closest(".workoutDiv");
+    if (!clickedEl) return;
     // console.log(clickedEl);
 
-    const workoutElement = this.#WorkoutList.find(el => el.id === clickedEl.dataset.id) 
+    if (clickedEl.id === "log") {
+      return
+    }
+
+    const workoutElement = this.#WorkoutList.find(
+      (el) => el.id === clickedEl.dataset.id
+    );
     // console.log(workoutElement);
 
     this.#map.setView(workoutElement.coords, 13, {
       animate: true,
       pan: {
         duration: 1,
-      }
-    })
+      },
+    });
   }
 
+  #SetLocalStorage() {
+    localStorage.setItem("workouts", JSON.stringify(this.#WorkoutList));
+  }
+
+  #GetLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("workouts"));
+    console.log(data);
+
+    if (!data) return;
+
+    this.#WorkoutList = data;
+
+    this.#WorkoutList.forEach((work) => {
+      this.#AddWorkOuts(work);
+    });
+  }
 }
 
 ////////////////////////////////////////////////////
