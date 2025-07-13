@@ -93,6 +93,7 @@ class Cyclying extends Workout {
 class OpenApp {
   #map;
   #mapEvent;
+  #curLocation;
   #WorkoutList = [];
 
   constructor() {
@@ -214,6 +215,8 @@ class OpenApp {
       type: "running",
       id: "404",
     };
+
+    this.#curLocation = options;
 
     // const coords = [5.4885544, 7.0606007];
 
@@ -377,6 +380,12 @@ class OpenApp {
     // console.log(clickedEl);
 
     if (clickedEl.id === "log") {
+      this.#map.setView(this.#curLocation.coords, 13, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
       return
     }
 
