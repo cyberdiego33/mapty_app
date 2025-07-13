@@ -379,19 +379,16 @@ class OpenApp {
     if (!clickedEl) return;
     // console.log(clickedEl);
 
+    let workoutElement;
+
     if (clickedEl.id === "log") {
-      this.#map.setView(this.#curLocation.coords, 13, {
-      animate: true,
-      pan: {
-        duration: 1,
-      },
-    });
-      return
+      workoutElement = this.#curLocation;
+    } else {
+      workoutElement = this.#WorkoutList.find(
+        (el) => el.id === clickedEl.dataset.id
+      );
     }
 
-    const workoutElement = this.#WorkoutList.find(
-      (el) => el.id === clickedEl.dataset.id
-    );
     // console.log(workoutElement);
 
     this.#map.setView(workoutElement.coords, 13, {
@@ -400,6 +397,12 @@ class OpenApp {
         duration: 1,
       },
     });
+
+    this.#hideForm()
+    // if (viewLogs.classList.contains("w-fit")) {
+    //   viewLogs.classList.remove("p-4", "w-fit");
+    //   viewLogs.classList.add("w-0");
+    // }
   }
 
   #SetLocalStorage() {
@@ -417,6 +420,11 @@ class OpenApp {
     this.#WorkoutList.forEach((work) => {
       this.#AddWorkOuts(work);
     });
+  }
+
+  resetWorkouts() {
+    localStorage.removeItem("workouts");
+    location.reload();
   }
 }
 
