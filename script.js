@@ -331,8 +331,11 @@ class OpenApp {
       if (
         !validInputs(distanceVal, durationVal, cadenceVal) ||
         !AllPositive(distanceVal, durationVal, cadenceVal)
-      )
+      ) {
         alert("Inputs have to be positive numbers");
+        // this.#hideForm();
+        return;
+      }
 
       newWorkout = new Running(
         [lat, lng],
@@ -349,8 +352,11 @@ class OpenApp {
       if (
         !validInputs(distanceVal, durationVal, elevationVal) ||
         !AllPositive(distanceVal, durationVal)
-      )
+      ) {
         alert("Inputs have to be positive numbers");
+        // this.#hideForm();
+        return;
+      }
 
       newWorkout = new Cyclying(
         [lat, lng],
@@ -398,7 +404,7 @@ class OpenApp {
       },
     });
 
-    this.#hideForm()
+    this.#hideForm();
     // if (viewLogs.classList.contains("w-fit")) {
     //   viewLogs.classList.remove("p-4", "w-fit");
     //   viewLogs.classList.add("w-0");
@@ -432,3 +438,4 @@ class OpenApp {
 // Creating an instance app
 
 const App = new OpenApp();
+console.log(App);
