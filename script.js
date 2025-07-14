@@ -139,11 +139,12 @@ class OpenApp {
 
   #AddWorkOuts(workout) {
     let string = `<div id="log-${workout.id}"
-                      class="workoutDiv p-5 bg-[#42484d] border-l-3 ${
+                      class="workoutDiv relative p-5 bg-[#42484d] border-l-3 ${
                         workout.type === "running"
                           ? "border-green-400"
                           : "border-yellow-400"
                       } rounded-sm mb-4" data-id="${workout.id}">
+                      <div class="delete-btn size-4 absolute right-4 top-4"><img class="size-4" alt="delete icon" src="images/delete.png" /></div>
                       <h4 class="text-lg font-bold text-white">${
                         workout.description
                       }</h4>
@@ -405,10 +406,6 @@ class OpenApp {
     });
 
     this.#hideForm();
-    // if (viewLogs.classList.contains("w-fit")) {
-    //   viewLogs.classList.remove("p-4", "w-fit");
-    //   viewLogs.classList.add("w-0");
-    // }
   }
 
   #SetLocalStorage() {
@@ -417,7 +414,7 @@ class OpenApp {
 
   #GetLocalStorage() {
     const data = JSON.parse(localStorage.getItem("workouts"));
-    console.log(data);
+    // console.log(data);
 
     if (!data) return;
 
@@ -426,6 +423,28 @@ class OpenApp {
     this.#WorkoutList.forEach((work) => {
       this.#AddWorkOuts(work);
     });
+
+    document
+      .querySelectorAll(".delete-btn")
+      .forEach((div) =>
+        div.addEventListener("click", this.#deleteLog.bind(this))
+      );
+  }
+
+  #deleteLog(e) {
+    const clickedDiv = e.target.closest(".workoutDiv");
+    e.stopPropagation();
+
+    const newList = this.#WorkoutList.filter((el) => {
+      return el.id !== clickedDiv.dataset.id;
+    });
+
+    // console.log(newList);
+
+    this.#WorkoutList = newList
+
+    this.#SetLocalStorage();
+    location.reload();
   }
 
   resetWorkouts() {
