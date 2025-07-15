@@ -40,7 +40,6 @@
       </nav>
 
       <section class="p-4 min-h-screen flex relative">
-
         <div
           id="viewLogs"
           class="flex-1 w-0 overflow-x-hidden bg-[#2d3439] absolute transition-all duration-700 md:relative max-w-[400px] md:w-fit md:p-4 z-100"
@@ -48,26 +47,34 @@
           <div class="flex space-x-4 mb-4">
             <img class="w-20 h-6 object-cover" src="images/logo.png" alt="" />
             <span class="text-gray-200">Your workout logs</span>
+            <div id="clearAllLogs" class="space-x-2 items-center hidden">
+              <p class="text-red-600 font-semibold">Clear</p>
+              <img class="size-4" alt="delete icon" src="images/delete.png" />
+            </div>
           </div>
 
-          <div>  
-
-            <div id="formDiv" class="workouts-form mb-6 bg-[#42484d] py-3 px-4 rounded-sm hidden">
+          <div>
+            <div
+              id="formDiv"
+              class="workouts-form mb-6 bg-[#42484d] py-3 px-4 rounded-sm hidden"
+            >
               <form id="form" class="">
                 <div class="flex space-x-4 mb-3">
                   <div class="flex flex-1 space-x-2 items-center">
                     <label class="text-gray-300 font-semibold">Type</label>
-                    <select id="inputType"
+                    <select
+                      id="inputType"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                     >
-                      <option value="running" selected >Running</option>
+                      <option value="running" selected>Running</option>
                       <option value="cycling">Cycling</option>
                     </select>
                   </div>
 
                   <div class="flex flex-1 space-x-2 items-center">
                     <label class="text-gray-300 font-semibold">Distance</label>
-                    <input id="inputDistance"
+                    <input
+                      id="inputDistance"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                       placeholder="km"
                     />
@@ -77,7 +84,8 @@
                 <div class="flex">
                   <div class="flex flex-1 space-x-2 items-center mr-4">
                     <label class="text-gray-300 font-semibold">Duration</label>
-                    <input id="inputDuration"
+                    <input
+                      id="inputDuration"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                       placeholder="min"
                     />
@@ -85,15 +93,20 @@
 
                   <div id="cadence" class="flex flex-1 space-x-2 items-center">
                     <label class="text-gray-300 font-semibold">Cadence</label>
-                    <input id="inputCadence"
+                    <input
+                      id="inputCadence"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                       placeholder="step/min"
                     />
                   </div>
 
-                  <div id="elevation" class="hidden flex-1 space-x-2 items-center">
+                  <div
+                    id="elevation"
+                    class="hidden flex-1 space-x-2 items-center"
+                  >
                     <label class="text-gray-300 font-semibold">Elev Gain</label>
-                    <input id="inputElevation"
+                    <input
+                      id="inputElevation"
                       class="p-1 w-[75px] ml-auto rounded-sm text-sm bg-[#ececec]"
                       placeholder="meters"
                     />
@@ -129,7 +142,6 @@
                 </div>
               </div>
             </div> -->
-
           </div>
         </div>
 

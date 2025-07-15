@@ -5,6 +5,7 @@ const viewLogs = document.querySelector("#viewLogs");
 const formDiv = document.querySelector("#formDiv");
 const form = document.querySelector("form");
 const LogsContainaer = document.querySelector("#LogsContainaer");
+const clearAllLogs = document.querySelector("#clearAllLogs");
 ///////////////////////////////////////////////////////
 // Inputs
 
@@ -104,6 +105,7 @@ class OpenApp {
     form.addEventListener("submit", this.#newWorkout.bind(this));
     inputType.addEventListener("change", this.#toggleElevationField);
     LogsContainaer.addEventListener("click", this.#MoveToPopup.bind(this));
+    clearAllLogs.addEventListener("click", this.resetWorkouts)
 
     // Get LocalStorage
     this.#GetLocalStorage();
@@ -429,6 +431,9 @@ class OpenApp {
       .forEach((div) =>
         div.addEventListener("click", this.#deleteLog.bind(this))
       );
+
+    clearAllLogs.classList.toggle("hidden")
+    clearAllLogs.classList.toggle("flex")
   }
 
   #deleteLog(e) {
